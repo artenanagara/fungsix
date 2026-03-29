@@ -109,12 +109,12 @@ export default function ServicesSection() {
 
   return (
     <section
-      className="relative px-20"
+      className="relative px-4 md:px-20"
       style={{
-        paddingTop: "100px",
-        paddingBottom: "100px",
-        minHeight: "900px",
-        backgroundColor: "#0d0d1a", // Solid fallback — prevents Footer bleed-through during overlay transitions
+        paddingTop: "clamp(60px, 8vw, 100px)",
+        paddingBottom: "clamp(60px, 8vw, 100px)",
+        minHeight: "auto",
+        backgroundColor: "#0d0d1a",
       }}
     >
 
@@ -168,7 +168,7 @@ export default function ServicesSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col" style={{ gap: "100px" }}>
+      <div className="relative z-10 flex flex-col" style={{ gap: "clamp(48px, 8vw, 100px)" }}>
         {/* Header */}
         <div className="flex flex-col" style={{ gap: "16px" }}>
           <Reveal delay={0.1}>
@@ -182,16 +182,16 @@ export default function ServicesSection() {
           <Reveal delay={0.2}>
             <h2
               className="font-manrope font-bold text-white leading-[1.4]"
-              style={{ fontSize: "56px", maxWidth: "1094px" }}
+              style={{ fontSize: "clamp(28px, 4vw, 56px)", maxWidth: "1094px" }}
             >
               Three capabilities. One integrated team. Full execution control.
             </h2>
           </Reveal>
         </div>
 
-        {/* Cards Row */}
+        {/* Cards — row on desktop, column on mobile */}
         <div
-          className="flex items-stretch"
+          className="flex flex-col md:flex-row items-stretch"
           style={{ gap: "20px", width: "100%" }}
         >
           {SERVICES_DATA.map((service, i) => (

@@ -31,15 +31,14 @@ export default function WhyChooseUs() {
       <div className="sticky top-0 w-full bg-white z-20 pointer-events-none" style={{ height: "100px" }} />
       
       <section
-        className="bg-white px-20 flex relative items-start"
-        style={{ gap: "99px", paddingTop: "100px", paddingBottom: "100px", marginTop: "-100px" }}
+        className="bg-white px-4 md:px-20 flex flex-col md:flex-row relative items-start"
+        style={{ gap: "clamp(40px, 6vw, 99px)", paddingTop: "clamp(60px, 8vw, 100px)", paddingBottom: "clamp(60px, 8vw, 100px)", marginTop: "-100px" }}
       >
-      {/* Left — static */}
+      {/* Left — static (sticky only on desktop) */}
       <div
-        className="flex flex-col sticky top-[100px]"
+        className="flex flex-col md:sticky md:top-[100px] w-full md:w-auto md:flex-shrink-0"
         style={{
-          width: "451px",
-          flexShrink: 0,
+          maxWidth: "451px",
           gap: "24px",
         }}
       >
@@ -54,7 +53,7 @@ export default function WhyChooseUs() {
         <Reveal delay={0.2}>
           <h2
             className="font-manrope font-bold text-[#111] leading-[1.4]"
-            style={{ fontSize: "56px" }}
+            style={{ fontSize: "clamp(32px, 5vw, 56px)" }}
           >
             One Partner.<br />Everything Covered.
           </h2>
@@ -72,15 +71,15 @@ export default function WhyChooseUs() {
       </div>
 
       {/* Right — scrolling items */}
-      <div className="flex flex-col" style={{ width: "600px", flexShrink: 0 }}>
+      <div className="flex flex-col w-full" style={{ maxWidth: "600px" }}>
         {ITEMS.map((item, i) => (
           <div
             key={i}
             className="flex flex-col relative"
           >
             {/* Standard "Push-Out" Sticky Header (Title + Description) */}
-            <div 
-              className="flex flex-col sticky top-[100px] bg-white z-10"
+            <div
+              className="flex flex-col md:sticky md:top-[100px] bg-white z-10"
               style={{
                 borderTop: "1px solid rgba(17,17,17,0.3)",
                 paddingTop: "32px",

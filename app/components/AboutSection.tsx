@@ -62,7 +62,7 @@ function AnimatedStat({ value }: { value: string }) {
     <span
       ref={ref}
       className="font-manrope font-bold text-white leading-none"
-      style={{ fontSize: "100px" }}
+      style={{ fontSize: "clamp(56px, 8vw, 100px)" }}
     >
       {display}{suffix}
     </span>
@@ -73,11 +73,11 @@ export default function AboutSection() {
   return (
     <>
       {/* ── Two-column content ─────────────────────────────── */}
-      <section className="bg-white px-20 relative z-10 shadow-2xl" style={{ paddingTop: "100px", paddingBottom: "100px" }}>
-        <div className="flex" style={{ gap: "100px", alignItems: "flex-start" }}>
+      <section className="bg-white px-4 md:px-20 relative z-10 shadow-2xl" style={{ paddingTop: "clamp(60px, 8vw, 100px)", paddingBottom: "clamp(60px, 8vw, 100px)" }}>
+        <div className="flex flex-col md:flex-row" style={{ gap: "clamp(40px, 6vw, 100px)", alignItems: "flex-start" }}>
 
           {/* Left */}
-          <div className="flex flex-col" style={{ gap: "32px", width: "450px", flexShrink: 0 }}>
+          <div className="flex flex-col w-full md:w-auto md:flex-shrink-0" style={{ gap: "32px", maxWidth: "450px" }}>
             <Reveal delay={0.1}>
               <span
                 className="font-manrope font-semibold text-[#df2b2b] uppercase"
@@ -89,7 +89,7 @@ export default function AboutSection() {
             <Reveal delay={0.2}>
               <h2
                 className="font-manrope font-bold text-[#111] leading-[1.4]"
-                style={{ fontSize: "56px" }}
+                style={{ fontSize: "clamp(36px, 5vw, 56px)" }}
               >
                 Planners<br />That Implement.
               </h2>
@@ -106,12 +106,12 @@ export default function AboutSection() {
           </div>
 
           {/* Right */}
-          <div className="flex flex-col" style={{ gap: "32px", width: "737px", flexShrink: 0 }}>
+          <div className="flex flex-col w-full" style={{ gap: "32px" }}>
             <Reveal delay={0.4}>
               <div
                 style={{
-                  width: "737px",
-                  height: "458px",
+                  width: "100%",
+                  height: "clamp(220px, 30vw, 458px)",
                   background: "linear-gradient(135deg, #1a1a2e 0%, #DF2B2B 100%)",
                   display: "block",
                 }}
@@ -142,8 +142,8 @@ export default function AboutSection() {
       <div className="bg-[#111] relative z-10">
         {/* Stats row */}
         <div
-          className="flex px-20"
-          style={{ paddingTop: "60px", paddingBottom: "60px", gap: "48px" }}
+          className="flex flex-col md:flex-row px-4 md:px-20"
+          style={{ paddingTop: "60px", paddingBottom: "60px", gap: "clamp(24px, 4vw, 48px)" }}
         >
           {STATS.map((s, i) => (
             <Reveal key={i} delay={0.1 + i * 0.1} className="flex-1">

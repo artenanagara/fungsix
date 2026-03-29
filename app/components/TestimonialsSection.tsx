@@ -94,13 +94,13 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className="bg-[#222] w-full min-h-screen flex flex-col pt-20 pb-20 gap-16 relative overflow-hidden px-20">
-      
+    <section className="bg-[#222] w-full min-h-screen flex flex-col pt-12 pb-12 md:pt-20 md:pb-20 gap-10 md:gap-16 relative overflow-hidden px-4 md:px-20">
+
       {/* Container for alignment */}
-      <div className="w-full grid grid-cols-12 items-end relative">
-        
+      <div className="w-full flex flex-col md:grid md:grid-cols-12 items-start md:items-end relative gap-6 md:gap-0">
+
         {/* Left Column: Title */}
-        <div className="col-span-8 flex flex-col" style={{ gap: "24px" }}>
+        <div className="md:col-span-8 flex flex-col" style={{ gap: "24px" }}>
           <Reveal delay={0.1}>
             <span
               className="font-manrope font-semibold text-[#df2b2b] uppercase"
@@ -112,7 +112,7 @@ export default function TestimonialsSection() {
           <Reveal delay={0.2}>
             <h2
               className="font-manrope font-bold text-white leading-[1.2]"
-              style={{ fontSize: "56px" }}
+              style={{ fontSize: "clamp(32px, 5vw, 56px)" }}
             >
               Don&apos;t take our<br/>word for it.
             </h2>
@@ -120,7 +120,7 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Right Column: Next / Prev Controls */}
-        <Reveal delay={0.3} className="col-span-4 flex justify-end">
+        <Reveal delay={0.3} className="md:col-span-4 flex md:justify-end">
           <div className="flex gap-4">
             <button
               onClick={prevSlide}

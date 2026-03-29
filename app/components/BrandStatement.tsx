@@ -77,12 +77,12 @@ export default function BrandStatement() {
       {/* The sticky element tracking normally within the wrapper */}
       <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden z-0">
         <motion.p
-          className="font-manrope font-bold leading-[1.6] flex flex-wrap relative w-full"
+          className="font-manrope font-bold leading-[1.6] flex flex-wrap relative w-full px-4 md:px-0"
           style={{
             y: yShift,
-            fontSize: "40px",
+            fontSize: "clamp(20px, 3.5vw, 40px)",
             maxWidth: "1000px",
-            margin: "0 auto", // Center horizontally
+            margin: "0 auto",
           }}
         >
           {WORDS.map((w, i) => {

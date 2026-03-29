@@ -81,19 +81,14 @@ function WorkCard({ item }: { item: WorkItem }) {
   );
 }
 
-export default function WorkSection() {
+function WorkSectionDesktop() {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // scrollYProgress = 0 when wrapper top hits viewport top
-  //                 = 1 when wrapper bottom hits viewport bottom
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
     offset: ["start start", "end end"],
   });
 
-  // Cards start at y=0 (anchored at top: 100% = below sticky viewport)
-  // As user scrolls, they rise by the full SCATTER_H + padding
-  // → last card bottom (y=800+500=1300) lands exactly at viewport bottom
   const cardsY = useTransform(
     scrollYProgress,
     [0, 1],
@@ -106,10 +101,7 @@ export default function WorkSection() {
       className="relative bg-[#111]"
       style={{ height: WRAPPER_H }}
     >
-      {/* Sticky viewport: pins the scene while wrapper scrolls */}
       <div className="sticky top-0 h-screen overflow-hidden">
-
-        {/* ── Title: always visible, floats above rising cards ── */}
         <div
           className="absolute inset-0 flex flex-col items-center justify-center gap-4 pointer-events-none select-none"
           style={{ zIndex: 20 }}
@@ -128,16 +120,14 @@ export default function WorkSection() {
           </h2>
         </div>
 
-        {/* ── Cards: anchored just below viewport, rise on scroll ── */}
         <motion.div
           className="absolute left-0 right-0"
           style={{
-            top: "100%",  // starts at bottom edge of sticky viewport (= below screen)
-            y: cardsY,    // translated upward as user scrolls
+            top: "100%",
+            y: cardsY,
             zIndex: 10,
           }}
         >
-          {/* Centered scatter canvas */}
           <div
             className="relative mx-auto"
             style={{ width: SCATTER_W, height: SCATTER_H }}
@@ -153,8 +143,62 @@ export default function WorkSection() {
             ))}
           </div>
         </motion.div>
-
       </div>
     </div>
+  );
+}
+
+function WorkSectionMobile() {
+  return (
+    <div className="bg-[#111] px-4 py-16">
+      <div className="flex flex-col items-center gap-3 mb-10">
+        <span
+          className="font-manrope font-semibold uppercase text-[#df2b2b]"
+          style={{ fontSize: 14, letterSpacing: "2.8px" }}
+        >
+          Our Work
+        </span>
+        <h2
+          className="font-manrope font-bold text-white text-center leading-[1.15]"
+          style={{ fontSize: "clamp(28px, 8vw, 48px)" }}
+        >
+          Some of our work.<br />All of our effort.
+        </h2>
+      </div>
+      <div className="flex flex-col gap-4">
+        {ITEMS.map((item, i) => (
+          <div key={i} className="relative overflow-hidden" style={{ width: "100%", aspectRatio: "16/9" }}>
+            <div
+              className="absolute inset-0 transition-[filter] duration-500"
+              style={{ background: item.bg }}
+            />
+            <div
+              className="absolute bottom-0 left-0 right-0 px-4 pb-3 pt-8"
+              style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75), transparent)" }}
+            >
+              <p className="font-manrope font-bold text-white leading-[1.2]" style={{ fontSize: 14 }}>
+                {item.title}
+              </p>
+              <p className="font-manrope text-white/55 leading-[1.3] mt-1" style={{ fontSize: 11 }}>
+                {item.tags}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function WorkSection() {
+  return (
+    <>
+      <div className="hidden md:block">
+        <WorkSectionDesktop />
+      </div>
+      <div className="block md:hidden">
+        <WorkSectionMobile />
+      </div>
+    </>
   );
 }
