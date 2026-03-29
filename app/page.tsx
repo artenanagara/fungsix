@@ -1,65 +1,116 @@
-import Image from "next/image";
+import CursorX from "./components/CursorX";
+import Reveal from "./components/Reveal";
+import FeaturedWork from "./components/FeaturedWork";
+import AboutSection from "./components/AboutSection";
+import ServicesSection from "./components/ServicesSection";
+import WorkSection from "./components/WorkSection";
+import WhyChooseUs from "./components/WhyChooseUs";
+import TestimonialsSection from "./components/TestimonialsSection";
+import Footer from "./components/Footer";
+import FooterWrapper from "./components/FooterWrapper";
+import BrandStatement from "./components/BrandStatement";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main>
+
+      {/*
+        All page content sits at z-index: 1 so it renders on top of the
+        fixed footer (z-index: 0). As the user scrolls, the last section
+        (Testimonials) slides up, revealing the footer from the top down.
+      */}
+      <div className="relative" style={{ zIndex: 1 }}>
+
+        {/* ─── HERO ──────────────────────────────────────────────────────── */}
+        <section
+          className="relative bg-[#111]"
+          style={{ minHeight: "1291px" }}
+        >
+          {/* Crosshair — z-index 1, below featured work (z-20) so image occludes it */}
+          <div
+            data-cursor-area
+            className="absolute inset-x-0 top-0 overflow-hidden pointer-events-none"
+            style={{ height: "811px", zIndex: 1 }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <CursorX />
+          </div>
+
+          {/* ── Navbar ── */}
+          <nav className="relative z-20 flex items-center justify-between px-20 py-5">
+            <span className="font-manrope font-bold text-white leading-none" style={{ fontSize: "32px" }}>
+              FUNGSIX
+            </span>
+            <ul className="flex items-center gap-8 font-manrope font-normal text-base text-white list-none m-0 p-0">
+              {["Services", "Work", "About", "Contact Us"].map((item) => (
+                <li key={item} className="cursor-pointer hover:opacity-70 transition-opacity">
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <a
+              href="#contact"
+              className="font-manrope font-semibold text-white underline underline-offset-4 hover:opacity-70 transition-opacity"
+              style={{ fontSize: "16px" }}
+            >
+              Let&apos;s Collaborate
+            </a>
+          </nav>
+
+          {/* ── Headline + subtitle ── */}
+          <div className="relative z-20 px-20" style={{ paddingTop: "162px" }}>
+            <Reveal delay={0.2}>
+              <h1
+                className="font-manrope font-bold text-white leading-[1.2] whitespace-pre-wrap"
+                style={{ fontSize: "100px", maxWidth: "1063px" }}
+              >
+                {`We build experiences \nthat drive real impact.`}
+              </h1>
+            </Reveal>
+            <Reveal delay={0.4}>
+              <p
+                className="font-manrope font-normal text-white/70 leading-[1.6] mt-8"
+                style={{ fontSize: "20px", maxWidth: "411px" }}
+              >
+                Integrated creative &amp; production agency that turns bold ideas
+                into real, measurable experiences.
+              </p>
+            </Reveal>
+          </div>
+
+          {/* ── Featured work strip — z-20 so it sits above cursor X lines ── */}
+          <div
+            className="absolute w-full"
+            style={{ top: "811px", height: "321px", zIndex: 20 }}
           >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            <FeaturedWork />
+          </div>
+        </section>
+
+        {/* ─── BRAND STATEMENT ───────────────────────────────────────────── */}
+        <BrandStatement />
+
+        {/* ─── ABOUT ─────────────────────────────────────────────────────── */}
+        <AboutSection />
+
+        {/* ─── SERVICES ──────────────────────────────────────────────────── */}
+        <ServicesSection />
+
+        {/* ─── WORK PORTFOLIO ────────────────────────────────────────────── */}
+        <WorkSection />
+
+        {/* ─── WHY CHOOSE US ─────────────────────────────────────────────── */}
+        <WhyChooseUs />
+
+        {/* ─── TESTIMONIALS ──────────────────────────────────────────────── */}
+        <TestimonialsSection />
+
+      </div>
+
+      {/* ─── FOOTER — fixed behind content, revealed as testimonials scrolls up */}
+      <FooterWrapper>
+        <Footer />
+      </FooterWrapper>
+
+    </main>
   );
 }
