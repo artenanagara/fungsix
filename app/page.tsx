@@ -79,11 +79,11 @@ export default function Home() {
                 { title: "Nike Air Max Day", tags: "Event Production · Social Campaign", bg: "#1a1a2e" },
                 { title: "Google I/O Jakarta", tags: "Tech Event · Experiential Design", bg: "#0d1f0d" },
               ].map((p) => (
-                <div key={p.title} className="flex items-center gap-3 p-3 border border-white/10">
+                <div key={p.title} className="flex items-center gap-3 p-3 border border-neutral/10">
                   <div className="w-16 h-12 flex-shrink-0" style={{ background: p.bg }} />
                   <div>
-                    <p className="font-manrope font-bold text-white text-sm leading-tight">{p.title}</p>
-                    <p className="font-manrope text-white/60 text-xs mt-1">{p.tags}</p>
+                    <p className="font-manrope font-bold text-black text-sm leading-tight">{p.title}</p>
+                    <p className="font-manrope text-[#11111] text-xs mt-1">{p.tags}</p>
                   </div>
                 </div>
               ))}

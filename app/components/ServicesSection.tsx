@@ -14,10 +14,11 @@ const SHOWREEL_COLORS = [
   "#E91E63", "#00BCD4", "#8BC34A", "#FFC107", "#3F51B5"
 ];
 
-// Slow ambient colors cycling in idle (no hover) state
+// Bright ambient colors cycling in idle (no hover) state
 const IDLE_COLORS = [
-  "#1a1a2e", "#162032", "#0d1f0d", "#1f0d1a",
-  "#1a1422", "#0d1a1f", "#1f1a0d", "#1a1a2e"
+  "#DF2B2B", "#2B7FDF", "#D4A017", "#9B3DDF",
+  "#1A8A55", "#DF6B2B", "#2BB5DF", "#DF2B7A",
+  "#DF2B2B",
 ];
 
 const SERVICES_DATA = [
@@ -31,6 +32,7 @@ const SERVICES_DATA = [
       "Corporate & Internal Events",
       "Community Engagement",
     ],
+    colors: ["#DF2B2B", "#FF6B35", "#E91E63", "#FF4444", "#C62828", "#DF2B2B"],
   },
   {
     title: "Digital Campaign & Video Production",
@@ -41,6 +43,7 @@ const SERVICES_DATA = [
       "Interactive Content",
       "Digital Strategy",
     ],
+    colors: ["#2B7FDF", "#00BCD4", "#9B51E0", "#2196F3", "#673AB7", "#2B7FDF"],
   },
   {
     title: "Construction & Production",
@@ -51,6 +54,7 @@ const SERVICES_DATA = [
       "Lighting & Rigging",
       "Logistics & Ops",
     ],
+    colors: ["#1A8A55", "#F2C94C", "#DF6B2B", "#4CAF50", "#FFC107", "#1A8A55"],
   },
 ];
 
@@ -95,7 +99,7 @@ const tagsContainerVariants: Variants = {
     height: "auto",
     opacity: 1,
     marginTop: "24px",
-    transition: { staggerChildren: 0.05, delayChildren: 0.1, duration: 0.3, ease: "easeOut" },
+    transition: { staggerChildren: 0.05, delayChildren: 0.1, duration: 2.3, ease: "easeOut" },
   },
 };
 
@@ -132,23 +136,20 @@ export default function ServicesSection() {
             backgroundColor: {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 5,
-              ease: "linear",
+              duration: 12,
+              ease: "easeInOut",
             },
           }}
         />
 
-        {SERVICES_DATA.map((_, i) => (
+        {SERVICES_DATA.map((service, i) => (
           <motion.div
             key={i}
             className="absolute inset-0 w-full h-full"
-            initial={{ opacity: 0, backgroundColor: SHOWREEL_COLORS[0] }}
+            initial={{ opacity: 0, backgroundColor: service.colors[0] }}
             animate={
               hoveredIndex === i
-                ? {
-                    opacity: 1,
-                    backgroundColor: SHOWREEL_COLORS,
-                  }
+                ? { opacity: 1, backgroundColor: service.colors }
                 : { opacity: 0 }
             }
             transition={{
@@ -156,8 +157,8 @@ export default function ServicesSection() {
               backgroundColor: {
                 repeat: Infinity,
                 repeatType: "loop",
-                duration: 20, // Looping across 20 colors in 2 seconds
-                ease: "linear",
+                duration: 8,
+                ease: "easeInOut",
               },
             }}
           />
@@ -205,7 +206,6 @@ export default function ServicesSection() {
                 padding: "20px",
                 backdropFilter: "blur(10px)",
                 border: "1px solid rgba(255,255,255,0.05)",
-                // Keep minimal fixed height so the expand effect has room to push
                 minHeight: "450px"
               }}
               initial="rest"
@@ -262,7 +262,7 @@ export default function ServicesSection() {
                     </motion.span>
                   ))}
                 </motion.div>
-                
+
                 </div>
               </div>
             </motion.div>

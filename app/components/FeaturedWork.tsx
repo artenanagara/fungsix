@@ -32,14 +32,14 @@ const PROJECTS: Project[] = [
 function ChevronLeft() {
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M9 2L4 7L9 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M9 2L4 7L9 12" stroke="#111" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
 function ChevronRight() {
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M5 2L10 7L5 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M5 2L10 7L5 12" stroke="#111" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
@@ -113,10 +113,10 @@ export default function FeaturedWork() {
           className="flex flex-col fade-up"
           style={{ gap: "4px", width: "519px", flexShrink: 0, paddingBottom: "4px" }}
         >
-          <p className="font-manrope font-bold text-white leading-[1.2]" style={{ fontSize: "16px" }}>
+          <p className="font-manrope font-bold text-black leading-[1.2]" style={{ fontSize: "16px" }}>
             {project.title}
           </p>
-          <p className="font-manrope font-normal text-white/70 leading-[1.2]" style={{ fontSize: "16px" }}>
+          <p className="font-manrope font-normal text-neutral/70 leading-[1.2]" style={{ fontSize: "16px" }}>
             {project.tags}
           </p>
         </div>
@@ -145,10 +145,10 @@ export default function FeaturedWork() {
         className="absolute flex items-center gap-6"
         style={{ left: "80px", top: "299px", zIndex: 4 }}
       >
-        <div style={{ width: "737px", height: "1px", background: "rgba(255,255,255,0.2)", position: "relative" }}>
+        <div style={{ width: "737px", height: "1px", background: "#111", position: "relative" }}>
           <div style={{
-            position: "absolute", left: 0, top: 0, height: "100%",
-            width: `${progress}%`, background: "rgba(255,255,255,0.85)",
+            position: "absolute", left: 0, top: 0, height: "2px",
+            width: `${progress}%`, background: "#111",
             transition: "width 0.45s cubic-bezier(0.22,1,0.36,1)",
           }} />
         </div>
@@ -158,7 +158,7 @@ export default function FeaturedWork() {
             className="opacity-60 hover:opacity-100 transition-opacity" aria-label="Previous">
             <ChevronLeft />
           </button>
-          <span className="font-manrope font-normal text-white leading-[1.2]" style={{ fontSize: "18px" }}>
+          <span className="font-manrope font-normal text-black leading-[1.2]" style={{ fontSize: "18px" }}>
             {String(idx + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
           </span>
           <button onClick={() => navigate("next")}
