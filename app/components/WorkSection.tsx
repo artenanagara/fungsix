@@ -238,7 +238,6 @@ function WorkSectionDesktop() {
 }
 
 function WorkSectionMobile() {
-  const [active, setActive] = useState<WorkItem | null>(null);
   return (
     <div className="bg-[#111] px-4 py-16">
       <div className="flex flex-col items-center gap-3 mb-10">

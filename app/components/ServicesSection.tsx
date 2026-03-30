@@ -6,14 +6,6 @@ import Reveal from "./Reveal";
 
 
 
-// Rapid 20-color sequence acting as a placeholder for a fast image/video showreel
-const SHOWREEL_COLORS = [
-  "#DF2B2B", "#2B5ADF", "#1A8A55", "#F2C94C", "#BB6BD9",
-  "#F2994A", "#56CCF2", "#6FCF97", "#9B51E0", "#EB5757",
-  "#2F80ED", "#2196F3", "#9C27B0", "#FF9800", "#4CAF50",
-  "#E91E63", "#00BCD4", "#8BC34A", "#FFC107", "#3F51B5"
-];
-
 // Bright ambient colors cycling in idle (no hover) state
 const IDLE_COLORS = [
   "#DF2B2B", "#2B7FDF", "#D4A017", "#9B3DDF",

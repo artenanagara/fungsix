@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 const ICON_X =
   "https://www.figma.com/api/mcp/asset/234f5c12-bd85-4c62-ad01-4aaab45a91a9";
@@ -55,6 +55,7 @@ function ProjectImage({ project }: { project: Project }) {
 }
 
 export default function FeaturedWork() {
+  // Carousel component for featured projects with wipe animation and marquee
   const [idx,      setIdx]      = useState(0);
   const [prevIdx,  setPrevIdx]  = useState<number | null>(null);
   // "next" | "prev"
@@ -72,6 +73,14 @@ export default function FeaturedWork() {
     );
   }, [idx]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      navigate("next");
+    }, 5000); // Auto-switch every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [navigate]);
+
   const project = PROJECTS[idx];
   const total   = PROJECTS.length;
   const progress = ((idx + 1) / total) * 100;
@@ -80,15 +89,11 @@ export default function FeaturedWork() {
 
   return (
     <div className="relative w-full h-full">
-
-      {/* ── Image + info row ─ flex items-end, gap-24 (Figma) ── */}
       <div
         className="absolute flex items-end"
         style={{ top: "-181px", left: 0, width: "100%", gap: "24px", zIndex: 2 }}
       >
-        {/* Image 817 × 459 — two-layer stack */}
         <div style={{ width: "817px", height: "459px", flexShrink: 0, position: "relative", overflow: "hidden" }}>
-          {/* EXIT layer — old image (static behind) */}
           {prevIdx !== null && (
             <div
               key={`exit-${token}`}
@@ -97,7 +102,6 @@ export default function FeaturedWork() {
               <ProjectImage project={PROJECTS[prevIdx]} />
             </div>
           )}
-          {/* ENTER layer — new image wiping ON TOP */}
           <div 
             key={`enter-${token}`} 
             className={`absolute inset-0 z-10 ${enterCls}`}
@@ -107,7 +111,6 @@ export default function FeaturedWork() {
           </div>
         </div>
 
-        {/* Title + category — fade-up on change */}
         <div
           key={`info-${token}`}
           className="flex flex-col fade-up"
@@ -122,7 +125,6 @@ export default function FeaturedWork() {
         </div>
       </div>
 
-      {/* ── White marquee — right half (720px → edge) ── */}
       <div
         className="absolute overflow-hidden"
         style={{ left: "720px", top: 0, right: 0, paddingTop: "8px", paddingBottom: "8px", background: "white", zIndex: 1 }}
@@ -133,14 +135,12 @@ export default function FeaturedWork() {
               <span className="font-manrope font-bold text-black leading-[1.2] whitespace-nowrap" style={{ fontSize: "20px" }}>
                 {item}
               </span>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={ICON_X} alt="" style={{ width: "33px", height: "24px" }} className="block shrink-0" />
             </div>
           ))}
         </div>
       </div>
 
-      {/* ── Progress + chevrons (top=299 — Figma) ── */}
       <div
         className="absolute flex items-center gap-6"
         style={{ left: "80px", top: "299px", zIndex: 4 }}
@@ -167,7 +167,6 @@ export default function FeaturedWork() {
           </button>
         </div>
       </div>
-
     </div>
   );
 }

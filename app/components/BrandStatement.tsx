@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 
 const WORDS = [
   { w: "We", h: false },
@@ -29,7 +29,7 @@ const WORDS = [
   { w: "deliver real impact.", h: true },
 ];
 
-function Word({ children, progress, range, isHighlight }: any) {
+function Word({ children, progress, range, isHighlight }: { children: React.ReactNode; progress: MotionValue<number>; range: [number, number]; isHighlight: boolean }) {
   const color = useTransform(progress, range, ["#aaaaaa", "#111111"]);
 
   if (isHighlight) {

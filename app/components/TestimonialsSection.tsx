@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 
@@ -80,18 +80,29 @@ export default function TestimonialsSection() {
   const gap = 32;
 
   const nextSlide = () => {
-    // Assuming we want to stop when the last card is visible on screen.
-    // We allow sliding up to length - 1 so the last card reaches the left edge.
-    if (currentIndex < TESTIMONIALS.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-    }
+    setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
   };
 
   const prevSlide = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-    }
+    setCurrentIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
   };
+
+  // Duplicate testimonials for infinite loop
+  const duplicatedTestimonials = [...TESTIMONIALS, ...TESTIMONIALS];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => prev + 1);
+    }, 4000); // Auto-advance every 4 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (currentIndex >= TESTIMONIALS.length) {
+      setCurrentIndex(0);
+    }
+  }, [currentIndex]);
 
   return (
     <section className="bg-[#222] w-full min-h-screen flex flex-col pt-12 pb-12 md:pt-20 md:pb-20 gap-10 md:gap-16 relative overflow-hidden px-4 md:px-20">
@@ -124,8 +135,7 @@ export default function TestimonialsSection() {
           <div className="flex gap-4">
             <button
               onClick={prevSlide}
-              disabled={currentIndex === 0}
-              className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-white transition-colors duration-300 flex-shrink-0"
+              className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors duration-300 flex-shrink-0"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M15 18l-6-6 6-6" />
@@ -133,8 +143,7 @@ export default function TestimonialsSection() {
             </button>
             <button
               onClick={nextSlide}
-              disabled={currentIndex === TESTIMONIALS.length - 1}
-              className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-white transition-colors duration-300 flex-shrink-0"
+              className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors duration-300 flex-shrink-0"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 18l6-6-6-6" />
@@ -150,10 +159,10 @@ export default function TestimonialsSection() {
           className="flex items-start"
           style={{ gap: `${gap}px`, width: "max-content" }}
           initial={false}
-          animate={{ x: -(currentIndex * (cardWidth + gap)) }}
+          animate={{ x: -((currentIndex % TESTIMONIALS.length) * (cardWidth + gap)) }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
         >
-          {TESTIMONIALS.map((t, i) => (
+          {duplicatedTestimonials.map((t, i) => (
             <div
               key={i}
               className="flex flex-col justify-between"

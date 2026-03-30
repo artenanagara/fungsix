@@ -2,10 +2,18 @@
 
 import { useState, useEffect } from "react";
 
-const NAV_ITEMS = ["Services", "Work", "About", "Contact Us"];
+const NAV_ITEMS = [
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Work", href: "#work" },
+  { label: "Why Choose Us", href: "#why-choose-us" },
+  { label: "Testimonials", href: "#testimonials" },
+];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     if (open) {
@@ -16,9 +24,33 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false); // Scroll down, hide navbar
+      } else {
+        setIsVisible(true); // Scroll up, show navbar
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
+  const handleNavClick = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      const top = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+    setOpen(false);
+  };
+
   return (
     <>
-      <nav className="relative z-20 flex items-center justify-between px-4 md:px-20 py-5">
+      <nav className={`fixed top-0 left-0 right-0 z-20 flex items-center justify-between px-4 md:px-20 py-5 bg-[#111] transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         {/* Logo */}
         <span
           className="font-manrope font-bold text-white leading-none"
@@ -30,8 +62,10 @@ export default function Navbar() {
         {/* Desktop Nav Links */}
         <ul className="hidden md:flex items-center gap-8 font-manrope font-normal text-base text-white list-none m-0 p-0">
           {NAV_ITEMS.map((item) => (
-            <li key={item} className="cursor-pointer hover:opacity-70 transition-opacity">
-              {item}
+            <li key={item.label} className="cursor-pointer hover:opacity-70 transition-opacity">
+              <button onClick={() => handleNavClick(item.href)} className="text-white bg-transparent border-none cursor-pointer font-manrope font-normal text-base">
+                {item.label}
+              </button>
             </li>
           ))}
         </ul>
@@ -110,17 +144,17 @@ export default function Navbar() {
         <ul className="flex flex-col font-manrope font-bold text-white list-none m-0 p-0" style={{ gap: "0" }}>
           {NAV_ITEMS.map((item, i) => (
             <li
-              key={item}
-              onClick={() => setOpen(false)}
+              key={item.label}
               className="cursor-pointer hover:opacity-70 transition-opacity border-b border-white/10 py-6"
               style={{ fontSize: "clamp(28px, 8vw, 40px)" }}
             >
-              <span
-                className="block transition-transform duration-300"
+              <button
+                onClick={() => handleNavClick(item.href)}
+                className="block text-white bg-transparent border-none cursor-pointer font-manrope font-bold transition-transform duration-300 w-full text-left"
                 style={{ transform: open ? "translateX(0)" : "translateX(-16px)", transitionDelay: `${i * 50}ms` }}
               >
-                {item}
-              </span>
+                {item.label}
+              </button>
             </li>
           ))}
         </ul>
